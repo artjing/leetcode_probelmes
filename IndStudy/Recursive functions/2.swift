@@ -7,32 +7,19 @@
 
 import Foundation
 
-// MARK -  Write a recursive function that returns the frequency of a key given as input in a BST
+// MARK -  To find the number of unique paths from a the root til the end of the BST
 
-
-let node = TreeNode(3)
-let lnode = TreeNode(3)
-let rnode = TreeNode(3)
-lnode.left = TreeNode(4)
-
-node.left = lnode
-node.right = rnode
-
-let result = findElement(node, 4)
-
-func findElement(_ root: TreeNode?, _ k: Int) -> Int {
+func findUniquePath(_ root: TreeNode?) -> Int{
     
-    if root == nil {
-        return 0
-    }
-    
-    let left = findElement(root?.left, k)
-    let right = findElement(root?.right, k)
-    
-    if root?.val == k {
-        return left + right + 1
-    }else{
-        return left + right
-    }
+    guard let root = root else { return 0 }
+    return dfs(root)
 }
 
+func dfs(_ root: TreeNode?) -> Int {
+    
+    guard let root = root else{ return 0 }
+    if root.left == nil && root.right == nil{
+        return 1
+    }
+    return dfs(root.left) + dfs(root.right)
+}
